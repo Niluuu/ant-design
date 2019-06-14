@@ -1,4 +1,4 @@
-import { queryRule, removeRule, addRule, updateRule } from './service';
+import { user, queryRule, removeRule, addRule, updateRule } from './service';
 import { TableListDate } from './data';
 import { Reducer } from 'redux';
 import { EffectsCommandMap } from 'dva';
@@ -17,6 +17,7 @@ export interface ModelType {
   namespace: string;
   state: IStateType;
   effects: {
+    user: Effect;
     fetch: Effect;
     add: Effect;
     remove: Effect;
@@ -38,6 +39,13 @@ const Model: ModelType = {
   },
 
   effects: {
+    *user({ payload }, { call, put }) {
+      const response = yield call(user, payload);
+      yield put({
+        type: 'save',
+        payload: response,
+      });
+    },
     *fetch({ payload }, { call, put }) {
       const response = yield call(queryRule, payload);
       yield put({

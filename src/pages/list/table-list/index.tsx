@@ -145,8 +145,12 @@ class TableList extends Component<TableListProps, TableListState> {
 
   componentDidMount() {
     const { dispatch } = this.props;
+    console.log("dispatch props", this.props)
     dispatch({
       type: 'listTableList/fetch',
+    });
+    dispatch({
+      type: 'listTableList/user',
     });
   }
 
