@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Input, Select, Button, DatePicker, Form, Modal, Steps, Radio } from 'antd';
-import { TableListItem } from '../data';
+import { TableListItem } from "../TableListItem";
 import { FormComponentProps } from 'antd/es/form';
 
 export type IFormValsType = {

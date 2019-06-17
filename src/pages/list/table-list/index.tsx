@@ -15,7 +15,7 @@ import {
   InputNumber,
   DatePicker,
   message,
-  Badge,
+  // Badge,
   Divider,
 } from 'antd';
 import { FormComponentProps } from 'antd/es/form';
@@ -36,9 +36,9 @@ const getValue = (obj: { [x: string]: string[] }) =>
     .map(key => obj[key])
     .join(',');
 
-type IStatusMapType = 'default' | 'processing' | 'success' | 'error';
-const statusMap = ['default', 'processing', 'success', 'error'];
-const status = ['关闭', '运行中', '已上线', '异常'];
+// type IStatusMapType = 'default' | 'processing' | 'success' | 'error';
+// const statusMap = ['default', 'processing', 'success', 'error'];
+// const status = ['关闭', '运行中', '已上线', '异常'];
 
 interface TableListProps extends FormComponentProps {
   dispatch: Dispatch<any>;
@@ -84,55 +84,19 @@ class TableList extends Component<TableListProps, TableListState> {
 
   columns: StandardTableColumnProps[] = [
     {
-      title: '规则名称',
-      dataIndex: 'name',
+      title: 'Login',
+      dataIndex: 'login',
     },
     {
-      title: '描述',
-      dataIndex: 'desc',
+      title: 'Email',
+      dataIndex: 'email',
     },
     {
-      title: '服务调用次数',
-      dataIndex: 'callNo',
-      sorter: true,
-      align: 'right',
-      render: (val: string) => `${val} 万`,
-      // mark to display a total number
-      needTotal: true,
-    },
-    {
-      title: '状态',
+      title: 'Status',
       dataIndex: 'status',
-      filters: [
-        {
-          text: status[0],
-          value: '0',
-        },
-        {
-          text: status[1],
-          value: '1',
-        },
-        {
-          text: status[2],
-          value: '2',
-        },
-        {
-          text: status[3],
-          value: '3',
-        },
-      ],
-      render(val: IStatusMapType) {
-        return <Badge status={statusMap[val]} text={status[val]} />;
-      },
     },
     {
-      title: '上次调度时间',
-      dataIndex: 'updatedAt',
-      sorter: true,
-      render: (val: string) => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
-    },
-    {
-      title: '操作',
+      title: 'Record',
       render: (text, record) => (
         <Fragment>
           <a onClick={() => this.handleUpdateModalVisible(true, record)}>配置</a>
@@ -145,13 +109,10 @@ class TableList extends Component<TableListProps, TableListState> {
 
   componentDidMount() {
     const { dispatch } = this.props;
+    dispatch({
+      type: 'listTableList/user'
+    });
     console.log("dispatch props", this.props)
-    dispatch({
-      type: 'listTableList/fetch',
-    });
-    dispatch({
-      type: 'listTableList/user',
-    });
   }
 
   handleStandardTableChange = (
@@ -213,7 +174,7 @@ class TableList extends Component<TableListProps, TableListState> {
         dispatch({
           type: 'listTableList/remove',
           payload: {
-            key: selectedRows.map(row => row.key),
+            // key: selectedRows.map(row => row.key),
           },
           callback: () => {
             this.setState({
@@ -287,11 +248,11 @@ class TableList extends Component<TableListProps, TableListState> {
     const { dispatch } = this.props;
     dispatch({
       type: 'listTableList/update',
-      payload: {
-        name: fields.name,
-        desc: fields.desc,
-        key: fields.key,
-      },
+      // payload: {
+      //   name: fields.name,
+      //   desc: fields.desc,
+      //   key: fields.key,
+      // },
     });
 
     message.success('配置成功');
@@ -423,6 +384,8 @@ class TableList extends Component<TableListProps, TableListState> {
       form,
     } = this.props;
 
+    console.log("this props", this.props)
+
     const { selectedRows, modalVisible, updateModalVisible, stepFormValues } = this.state;
     const menu = (
       <Menu onClick={this.handleMenuClick} selectedKeys={[]}>
@@ -439,6 +402,9 @@ class TableList extends Component<TableListProps, TableListState> {
       handleUpdateModalVisible: this.handleUpdateModalVisible,
       handleUpdate: this.handleUpdate,
     };
+
+    console.log("props", this.props)
+
     return (
       <PageHeaderWrapper>
         <Card bordered={false}>
@@ -459,7 +425,7 @@ class TableList extends Component<TableListProps, TableListState> {
                 </span>
               )}
             </div>
-            <StandardTable
+           <StandardTable
               selectedRows={selectedRows}
               loading={loading}
               data={data}

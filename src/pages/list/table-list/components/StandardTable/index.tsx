@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { Table, Alert } from 'antd';
 import { TableProps, ColumnProps, SorterResult } from 'antd/es/table';
 import styles from './index.less';
-import { TableListItem } from '../../data';
+import { TableListItem } from "../../TableListItem";
 
 type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
@@ -96,6 +96,7 @@ class StandardTable extends Component<StandardTableProps<TableListItem>, Standar
     const { selectedRowKeys, needTotalList } = this.state;
     const { data, rowKey, ...rest } = this.props;
     const { list = [], pagination = false } = data || {};
+    console.log("data", this.props )
 
     const paginationProps = {
       showSizeChanger: true,

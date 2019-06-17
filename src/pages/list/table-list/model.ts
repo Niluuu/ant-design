@@ -1,4 +1,5 @@
-import { user, queryRule, removeRule, addRule, updateRule } from './service';
+import { queryRule, removeRule, addRule, updateRule } from './service';
+import { user } from './_mock';
 import { TableListDate } from './data';
 import { Reducer } from 'redux';
 import { EffectsCommandMap } from 'dva';
